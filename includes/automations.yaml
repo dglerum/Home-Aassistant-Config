@@ -1,9 +1,9 @@
 - action:
-  - service: script.1523505263098
-  alias: Playroom Fan Level 1
+  - delay: 00:05  # Waits 5 minutes
+  - service: homekit.start
+  alias: Start Apple HomeKit
   condition: []
   id: '1523506259174'
   trigger:
-  - entity_id: input_select.playroom_fan
-    platform: state
-    to: Level 1
+  - platform: homeassistant
+    event: start
