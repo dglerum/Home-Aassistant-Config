@@ -1,71 +1,123 @@
+###################################################
+#                                                 #
+#     Home Assistant Main Configuration File      #
+#                                                 #
+###################################################
+
 homeassistant:
-  # Name of the location where Home Assistant is running
-  name: Home
-  # Location required to calculate the time the sun rises and sets
-  latitude: 0
-  longitude: 0
-  # Impacts weather/sunrise data (altitude above sea level in meters)
+  name: !secret name
+  temperature_unit: C
+  time_zone: Europe/Brussels
+  latitude: !secret latitude
+  longitude: !secret longitude
   elevation: 0
-  # metric for Metric, imperial for Imperial
   unit_system: metric
-  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-  time_zone: UTC
-  # Customization file
-  customize: !include customize.yaml
+  customize: !include includes/customize.yaml
+  packages: !include_dir_named packages
 
-# Show links to resources in log and frontend
-introduction:
+###################################################
+#                                                 #
+#                     Panel                       #
+#                                                 #
+###################################################
 
-# Enables the frontend
-frontend:
+# panel_iframe:
+#   configurator:
+#     title: Configurator
+#     icon: mdi:wrench
+#     url: configurator url
+#   nodered:
+#     title: Node-Red
+#     icon: mdi:shuffle-variant
+#     url: node red url
+#   sonweb:
+#     title: SonWEB
+#     icon: mdi:lightbulb-on
+#     url:  sonweb url
 
-# Enables configuration UI
+####################################################
+#                                                  #
+#                     Enables                      #
+#                                                  #
+####################################################
+
 config:
 
 http:
-  # Secrets are defined in the file secrets.yaml
-  # api_password: !secret http_password
-  # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
-  # base_url: example.duckdns.org:8123
+  api_password: !secret http_password
 
-# Checks for available updates
-# Note: This component will send some information about your system to
-# the developers to assist with development of Home Assistant.
-# For more information, please see:
-# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
 updater:
-  # Optional, allows Home Assistant developers to focus on popular components.
-  # include_used_components: true
-
-# Discover some devices automatically
 discovery:
-
-# Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
-
-# Enables support for tracking state changes over time
 history:
-
-# View all events in a logbook
 logbook:
-
-# Enables a map showing the location of tracked devices
 map:
 
-# Track the sun
-sun:
+####################################################
+#                                                  #
+#                 Customizations                   #
+#                                                  #
+####################################################
 
-# Weather prediction
-sensor:
-  - platform: yr
+#customizer:
+#  custom_ui: local
 
-# Text to speech
-tts:
-  - platform: google
+frontend:
+#  themes: !include themes.yaml
+#  extra_html_url:
+#    - /local/custom_ui/state-card-custom-ui.html
+#  extra_html_url_es5:
+#    - /local/custom_ui/state-card-custom-ui-es5.html
 
-# Cloud
+####################################################
+#                                                  #
+#                      Logger                      #
+#                                                  #
+####################################################
+
+logger:
+  #default: warn
+  #logs:
+  #  custom_components.fan.xiaomi_miio_fan: debug
+  #  miio: debug
+
+####################################################
+#                                                  #
+#                     Recorder                     #
+#                                                  #
+####################################################
+
+recorder:
+  # purge_interval: 2
+  # purge_keep_days: 5
+
+####################################################
+#                                                  #
+#                      Cloud                       #
+#                                                  #
+####################################################
+
 cloud:
 
-group: !include groups.yaml
-automation: !include automations.yaml
-script: !include scripts.yaml
+####################################################
+#                                                  #
+#                      MQTT                        #
+#                                                  #
+####################################################
+
+mqtt:
+  broker: core-mosquitto
+#   username: !secret mozzieuser
+#   password: !secret mozziepass
+
+####################################################
+#                                                  #
+#                    Includes                      #
+#                                                  #
+####################################################
+
+zone: !include includes/zones.yaml
+group: !include includes/groups.yaml
+automation: !include includes/automations.yaml
+script: !include includes/scripts.yaml
+media_player: !include includes/media_players.yaml
