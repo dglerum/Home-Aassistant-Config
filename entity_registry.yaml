@@ -1,0 +1,10 @@
+switch.wemo_livingroom:
+  config_entry_id:
+  name:
+  platform: wemo
+  unique_id: 221623K12008B0
+switch.wemo_bedroom:
+  config_entry_id:
+  name:
+  platform: wemo
+  unique_id: 221623K12006D0
