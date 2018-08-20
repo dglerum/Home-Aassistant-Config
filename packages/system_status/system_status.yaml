@@ -36,27 +36,27 @@ group:
     view: no
     entities:
       - binary_sensor.core_router
-      - binary_sensor.core_switch
-      - binary_sensor.upstairs_switch
-      - binary_sensor.wifi_bridge
-      - binary_sensor.downstairs_ap
-      - binary_sensor.upstairs_ap
-      - binary_sensor.5g_ac_main
-      - binary_sensor.5g_ac_media_tv
-      - binary_sensor.5g_ac_upstairs
+      # - binary_sensor.core_switch
+      # - binary_sensor.upstairs_switch
+      - binary_sensor.orbi_router
+      # - binary_sensor.downstairs_ap
+      - binary_sensor.orbi_sattelite
+      # - binary_sensor.5g_ac_main
+      # - binary_sensor.5g_ac_media_tv
+      # - binary_sensor.5g_ac_upstairs
 
   core devices:
     name: Core Devices
     view: no
     entities:
-      - binary_sensor.nas_movies
-      - binary_sensor.nas_tv
-      - binary_sensor.smart_things_hub
-      - binary_sensor.xiaomi_gateway
-      - binary_sensor.xiaomi_gateway
-      - binary_sensor.alexa_main
-      - binary_sensor.alexa_bedroom
-      - binary_sensor.main_pc
+      # - binary_sensor.nas_movies
+      # - binary_sensor.nas_tv
+      - binary_sensor.philips_hub
+      # - binary_sensor.xiaomi_gateway
+      # - binary_sensor.xiaomi_gateway
+      # - binary_sensor.alexa_main
+      # - binary_sensor.alexa_bedroom
+      # - binary_sensor.main_pc
       - binary_sensor.printer
 
   ha devices:
@@ -64,22 +64,22 @@ group:
     view: no
     entities:
       - binary_sensor.rpi
-      - binary_sensor.garden_pi
-      - binary_sensor.alarm_panel
-      - binary_sensor.kitchen_dashboard
-      - binary_sensor.upstairs_dashboard
+      # - binary_sensor.garden_pi
+      # - binary_sensor.alarm_panel
+      # - binary_sensor.kitchen_dashboard
+      # - binary_sensor.upstairs_dashboard
 
   media devices:
     name: Media Devices
     view: no
     entities:
-      - binary_sensor.hdhomerun
-      - binary_sensor.media_tv
-      - binary_sensor.media_kodi_4k
-      - binary_sensor.appletv
-      - binary_sensor.bedroom_tv
-      - binary_sensor.bedroom_kodi
-      - binary_sensor.patio_kodi
+      # - binary_sensor.hdhomerun
+      # - binary_sensor.media_tv
+      # - binary_sensor.media_kodi_4k
+      # - binary_sensor.appletv
+      # - binary_sensor.bedroom_tv
+      - binary_sensor.tv_kodi
+      # - binary_sensor.patio_kodi
 
   internet:
     name: Internet
@@ -108,20 +108,21 @@ group:
 device_tracker:
   - platform: ping
     hosts:
-      core_router: 10.0.0.1
+      core_router: !secret core_router
+      rPi: !secret ha_server
       nas_movies: 10.0.0.2
       nas_tv: 10.0.0.3
       core_switch: 10.0.0.4
       upstairs_switch: 10.0.0.5
-      wifi_bridge: 10.0.0.7
-      upstairs_ap: 10.0.0.9
+      orbi_router: !secret orbi_router
+      orbi_sattelite: !secret orbi_sattelite
       downstairs_ap: 10.0.0.10
       5g_ac_main: 10.0.0.11
       5g_ac_media_tv: 10.0.0.12
       5g_ac_upstairs: 10.0.0.13
-      printer: 10.0.0.50
+      printer: !secret printer
       media_kodi_4k: 10.0.1.1
-      bedroom_kodi: 10.0.1.2
+      tv_kodi: !secret tv_kodi
       backup_kodi: 10.0.1.3
       patio_kodi: 10.0.1.4
       hdhomerun: 10.0.1.10
@@ -136,8 +137,7 @@ device_tracker:
       james_work_phone: 10.0.5.6
       upstairs_dashboard: 10.0.6.2
       kitchen_dashboard: 10.0.6.3
-      smart_things_hub: 10.0.20.1
-      rPi: 10.0.20.3
+      philips_hub: !secret philips_hub
       garden_pi: 10.0.20.5
       xiaomi_gateway: 10.0.20.6
       xiaomi_gateway_2: 10.0.20.7
@@ -212,13 +212,13 @@ binary_sensor:
           {% else %}
             mdi:alert
           {% endif %}
-      wifi_bridge:
-        friendly_name: Wi-Fi Bridge
+      orbi_router:
+        friendly_name: Orbi Router
         device_class: connectivity
-        entity_id: device_tracker.wifi_bridge
-        value_template: "{{ is_state('device_tracker.wifi_bridge', 'home') }}"
+        entity_id: device_tracker.orbi_router
+        value_template: "{{ is_state('device_tracker.orbi_router', 'home') }}"
         icon_template: >-
-          {% if is_state('device_tracker.wifi_bridge', 'home') %}
+          {% if is_state('device_tracker.orbi_router', 'home') %}
             mdi:access-point
           {% else %}
             mdi:alert
@@ -234,13 +234,13 @@ binary_sensor:
           {% else %}
             mdi:alert
           {% endif %}
-      upstairs_ap:
-        friendly_name: Altai AP Upstairs
+      orbi_sattelite:
+        friendly_name: Orbi Sattelite
         device_class: connectivity
-        entity_id: device_tracker.upstairs_ap
-        value_template: "{{ is_state('device_tracker.upstairs_ap', 'home') }}"
+        entity_id: device_tracker.orbi_sattelite
+        value_template: "{{ is_state('device_tracker.orbi_sattelite', 'home') }}"
         icon_template: >-
-          {% if is_state('device_tracker.upstairs_ap', 'home') %}
+          {% if is_state('device_tracker.orbi_sattelite', 'home') %}
             mdi:access-point
           {% else %}
             mdi:alert
@@ -311,13 +311,13 @@ binary_sensor:
           {% else %}
             mdi:alert
           {% endif %}
-      smart_things_hub:
-        friendly_name: Smart Things Hub
+      philips_hub:
+        friendly_name: Philips Hub
         device_class: connectivity
-        entity_id: device_tracker.smart_things_hub
-        value_template: "{{ is_state('device_tracker.smart_things_hub', 'home') }}"
+        entity_id: device_tracker.philips_hub
+        value_template: "{{ is_state('device_tracker.philips_hub', 'home') }}"
         icon_template: >-
-          {% if is_state('device_tracker.smart_things_hub', 'home') %}
+          {% if is_state('device_tracker.philips_hub', 'home') %}
             mdi:checkbox-blank-circle-outline
           {% else %}
             mdi:alert
@@ -465,13 +465,13 @@ binary_sensor:
           {% else %}
             mdi:alert
           {% endif %}
-      bedroom_kodi:
-        friendly_name: Bedroom Kodi
+      tv_kodi:
+        friendly_name: TV Kodi
         device_class: connectivity
-        entity_id: device_tracker.bedroom_kodi
-        value_template: "{{ is_state('device_tracker.bedroom_kodi', 'home') }}"
+        entity_id: device_tracker.tv_kodi
+        value_template: "{{ is_state('device_tracker.tv_kodi', 'home') }}"
         icon_template: >-
-          {% if is_state('device_tracker.bedroom_kodi', 'home') %}
+          {% if is_state('device_tracker.tv_kodi', 'home') %}
             mdi:kodi
           {% else %}
             mdi:alert

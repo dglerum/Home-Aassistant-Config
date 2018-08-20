@@ -72,5 +72,5 @@ device_tracker:
   # - platform: owntracks
   #   max_gps_accuracy: 200
 
-  - platform: bluetooth_tracker
-    request_rssi: true
+  # - platform: bluetooth_tracker
+  #   request_rssi: true

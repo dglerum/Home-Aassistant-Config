@@ -60,18 +60,22 @@ automation:
     - platform: state
       entity_id: switch.goodnight
       to: 'on'
-    condition:
-    - condition: numeric_state
-      entity_id: sensor.door_count
-      below: '1'
-    - condition: numeric_state
-      entity_id: sensor.window_count
-      below: '1'
+    # condition:
+    # - condition: numeric_state
+    #   entity_id: sensor.door_count
+    #   below: '1'
+    # - condition: numeric_state
+    #   entity_id: sensor.window_count
+    #   below: '1'
     action:
-    - service: tts.google_say
-      data:
-        entity_id: media_player.tts_kodi
-        message: Goodnight sweet dreams, I'll take it from here
+    - service: tts.amazon_polly_say
+      data_template:
+        entity_id: media_player.kodi
+        message: >
+          <speak>
+            Goodnight, sweet dreams, I'll take it from here
+          </speak>
+        cache: true
     - service: script.1527969569077
 
 ## Notify if there are any open doors before setting the alarm from good night script
@@ -85,10 +89,14 @@ automation:
       entity_id: sensor.door_count
       above: '0'
     action:
-    - service: tts.google_say
-      data:
+    - service: tts.amazon_polly_say
+      data_template:
         entity_id: media_player.kodi
-        message: There are still doors open maybe you should close them first.
+        message: >
+          <speak>
+            There are still doors open maybe you should close them first.
+          </speak>
+        cache: true
 
 ## Notify if there are any open windows before setting the alarm from good night script
   - alias: 'Open Doors Notification on Goodnight'
@@ -102,7 +110,11 @@ automation:
       above: '0'
     action:
     - delay: '00:00:20'
-    - service: tts.google_say
-      data:
-        entity_id: media_player.tts_kodi
-        message: There are still windows open maybe you should close them first.
+    - service: tts.amazon_polly_say
+      data_template:
+        entity_id: media_player.kodi
+        message: >
+          <speak>
+            There are still windows open maybe you should close them first.
+          </speak>
+        cache: true

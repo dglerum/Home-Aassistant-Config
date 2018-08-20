@@ -45,6 +45,7 @@ config:
 
 http:
   api_password: !secret http_password
+  # base_url: 192.168.1.55:8123
 
 updater:
 discovery:
@@ -118,7 +119,7 @@ mqtt:
 
 homekit:
   auto_start: false
-  ip_address: 192.168.1.45
+  # ip_address: 192.168.1.45
   filter:
     include_entities:
       ## Lights

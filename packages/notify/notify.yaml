@@ -33,6 +33,16 @@ notify:
 
 tts:
   - platform: google
+    cache: true
+    cache_dir: /tmp/tts
+    time_memory: 300
+
+  - platform: amazon_polly
+    aws_access_key_id: !secret aws_access_key_id
+    aws_secret_access_key: !secret aws_secret_access_key
+    region_name: eu-west-1
+    text_type: ssml
+    cache: True
 
 #################################################################
 #                                                               #
