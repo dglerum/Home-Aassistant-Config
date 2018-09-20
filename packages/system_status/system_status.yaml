@@ -109,7 +109,7 @@ device_tracker:
   - platform: ping
     hosts:
       core_router: !secret core_router
-      rPi: !secret ha_server
+      rPi: 192.168.1.160
       nas_movies: 10.0.0.2
       nas_tv: 10.0.0.3
       core_switch: 10.0.0.4
